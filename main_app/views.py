@@ -1,12 +1,5 @@
 from django.shortcuts import render
-
-# Baby step - Usually a Model is used
-finches = [
-    {'name': 'Tweety', 'species': 'Canary', 'description': 'bright yellow with a lovely singing voice', 'age': 1},
-    {'name': 'Pip', 'species': 'Zebra Finch', 'description': 'small and energetic, with black and white striped feathers', 'age': 2},
-    {'name': 'Rio', 'species': 'Parrot Finch', 'description': 'colorful with a playful personality', 'age': 1},
-]
-
+from .models import Finch
 
 # Create your views here.
 def home(request):
@@ -16,6 +9,13 @@ def about(request):
     return render(request, 'about.html')
 
 def finches_index(request):
+    finches = Finch.objects.all()
     return render(request, 'finches/index.html', {
         'finches': finches
+    })
+
+def finches_detail(request, finch_id):
+    finch = Finch.objects.get(id=finch_id)
+    return render(request, 'finches/detail.html', {
+        'finch': finch
     })
